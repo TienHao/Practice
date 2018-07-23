@@ -97,22 +97,22 @@ public class CellophaneNumber {
 		indexMap.put("c", 5);
 
 		Map<String, Color> colorMap = new HashMap<String, Color>();
-		colorMap.put("R", Color.RED);
-		colorMap.put("G", Color.GREEN);
-		colorMap.put("B", Color.BLUE);
-		colorMap.put("Y", Color.YELLOW);
+		colorMap.put("R", new Color(255,75,75));
+		colorMap.put("G", new Color(195,255,0 ));
+		colorMap.put("B", new Color(0,195,255));
+		colorMap.put("Y", new Color(255,255,0));
 		colorMap.put("M", Color.MAGENTA);
 		colorMap.put("C", Color.CYAN);
 
-		colorMap.put("r", Color.RED);
-		colorMap.put("g", Color.GREEN);
-		colorMap.put("b", Color.BLUE);
-		colorMap.put("y", Color.YELLOW);
+		colorMap.put("r", new Color(255,75,75));
+		colorMap.put("g", new Color(195,255,0 ));
+		colorMap.put("b", new Color(0,195,255));
+		colorMap.put("y", new Color(255,255,0));
 		colorMap.put("m", Color.MAGENTA);
 		colorMap.put("c", Color.CYAN);
-
-		String ink = "rgby";
-		String celleophane = "RBY";
+  
+		String ink = "rgbym";
+		String celleophane = "RGBY";
 		int leastColor = 4;
 		Color[] colorArray = new Color[ink.length()];
 		for (int i = 0; i < ink.length(); i++) {
@@ -197,14 +197,14 @@ public class CellophaneNumber {
 										if (!reverseSet.contains("" + no1 + no2 + no3 + no4 + no5 + no6 + no7)) {
 
 											reverseSet.add("" + no7 + no6 + no5 + no4 + no3 + no2 + no1);
-//											int[] lineColor = { no1, no2, no3, no4, no5, no6, no7 };
-//											try {
-//												NumberGraphic.print(lineColor, colorArray, numbers);
-//											} catch (IOException e) {
-//												// TODO Auto-generated catch
-//												// block
-//												e.printStackTrace();
-//											}
+											int[] lineColor = { no1, no2, no3, no4, no5, no6, no7 };
+											try {
+												NumberGraphic.print(lineColor, colorArray, numbers);
+											} catch (IOException e) {
+												// TODO Auto-generated catch
+												// block
+												e.printStackTrace();
+											}
 										} else {
 										}
 										validateSet.add("" + no1 + no2 + no3 + no4 + no5 + no6 + no7);

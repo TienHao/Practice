@@ -1,6 +1,7 @@
 package com.tienhao.practice.matrix;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
@@ -75,9 +76,64 @@ public class NumberGraphic {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Color[] color = { Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW };
-		int[] lineColor = { 0, 2, 3, 1, 0, 2, 1 };
-		print(lineColor, color, "0231021");
+//		Color[] color = { Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW };
+//		int[] lineColor = { 0, 2, 3, 1, 0, 2, 1 };
+//		print(lineColor, color, "0231021");
+		printAll();
 	}
+	
+	private static void printAll() throws IOException {
+		BufferedImage bi = new BufferedImage(1000, 1400, BufferedImage.TYPE_INT_RGB);
+		g = bi.createGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 1000, 1400);
+		
+		g.setFont(new Font(null,Font.BOLD,9));
+		
+		int x=25;
+		int y=25;
+		int n=0;
+		int anchorX =x;
+		int anchorY =y;
+		for(int i=0;i<16;i++){	
+			for(int j=0;j<16;j++){
+				for(int k=0;k<16;k++){
+					if(k==0){
+						drawTestColor((255-17*j)+"",0,0,0,x+3,y-10);
+					}
+					if(j==0){
+						drawTestColor((255-17*i)+"",0,0,0,x-17,y);
+					}
+					
+					drawTestColor("¡½¡½",255-17*i,255-17*j,255-17*k,x,y);
+					drawTestColor(255-17*k+"",255,255,255,x+3,y);
 
+					y=y+10;
+					n=n+1;
+					if(n%16==0){
+						x=x+30;
+						y=anchorY;
+						if(n%256==0){
+							x=x+15;
+						}
+						if(n%512==0){
+							x=anchorX;
+							y=y+173;
+							anchorY = y;
+						}
+					}
+				}
+			}
+		}	
+		
+		g.dispose();
+
+		File file = new File("D://Graphics/test.png");
+		ImageIO.write(bi, "png", file);
+	}
+	
+	private static void drawTestColor(String str ,int R,int G,int B, int X,int Y){
+		g.setColor(new Color(R,G,B));
+		g.drawString(str, X, Y);
+	}
 }
