@@ -230,7 +230,7 @@ public class CellophaneNumber {
 
 											reverseSet.add("" + no7 + no6 + no5 + no4 + no3 + no2 + no1);
 											try {
-												NumberGraphic.print(numberColorString, colorArray,numberColorString+ "  "+ numbers+" "+reverseNumbers,reverseCount);
+												NumberGraphic.print(numberColorString, colorArray,numberColorString+ "  "+ numbers+"-"+reverseNumbers,reverseCount);
 											} catch (IOException e) {
 												e.printStackTrace();
 											}
