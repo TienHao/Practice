@@ -7,6 +7,7 @@ import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -53,13 +54,8 @@ public class NumberGraphic {
 		g.drawPolygon(poly1);
 		g.fillPolygon(poly1);
 	}
-
-	static void print(int[] lineColor, Color[] colorArray, String fileName) throws IOException {
-		BufferedImage bi = new BufferedImage(110, 200, BufferedImage.TYPE_INT_RGB);
-		g = bi.createGraphics();
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 110, 200);
-
+	
+	static private void drawColorNumber(int[] lineColor, Color[] colorArray, int x, int y){
 		setHorizontalLine(55, 10, colorArray[lineColor[0]]);
 		setVerticalLine(10, 55, colorArray[lineColor[1]]);
 		setVerticalLine(100, 55, colorArray[lineColor[2]]);
@@ -67,10 +63,41 @@ public class NumberGraphic {
 		setVerticalLine(10, 145, colorArray[lineColor[4]]);
 		setVerticalLine(100, 145, colorArray[lineColor[5]]);
 		setHorizontalLine(55, 190, colorArray[lineColor[6]]);
+	}
 
+	static void print(String lineColorStr, Color[] colorArray, String fileName,int reverseCount) throws IOException {
+		BufferedImage bi = new BufferedImage(110, 200, BufferedImage.TYPE_INT_RGB);
+		g = bi.createGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 110, 200);
+		int[] lineColor = {Integer.parseInt(lineColorStr.substring(0, 1)),
+				Integer.parseInt(lineColorStr.substring(1, 2)),
+				Integer.parseInt(lineColorStr.substring(2, 3)),
+				Integer.parseInt(lineColorStr.substring(3, 4)),
+				Integer.parseInt(lineColorStr.substring(4, 5)),
+				Integer.parseInt(lineColorStr.substring(5, 6)),
+				Integer.parseInt(lineColorStr.substring(6, 7)),};
+		drawColorNumber(lineColor,colorArray,0,0);
+		
 		g.dispose();
 
-		File file = new File("D://Graphics/" + fileName + ".png");
+		File file = new File("D://Graphics/" +reverseCount+File.separator+ fileName + ".png");
+		ImageIO.write(bi, "png", file);
+
+	}
+	
+	static void printNumbers(List<int[]> lineColor, Color[] colorArray, String fileName,int reverseCount) throws IOException {
+		BufferedImage bi = new BufferedImage(110+130*lineColor.size(), 200, BufferedImage.TYPE_INT_RGB);
+		g = bi.createGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 130*lineColor.size(), 200);
+		for(int i=0;i<lineColor.size();i++){			
+			drawColorNumber(lineColor.get(i),colorArray,130*i,0);
+		}
+		
+		g.dispose();
+
+		File file = new File("D://Graphics/" +reverseCount+File.separator+ fileName + ".png");
 		ImageIO.write(bi, "png", file);
 
 	}

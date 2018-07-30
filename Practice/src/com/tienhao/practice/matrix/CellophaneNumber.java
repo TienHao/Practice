@@ -14,31 +14,51 @@ public class CellophaneNumber {
 		Set<String> reverseSet = new HashSet<String>();
 		Map<Integer, String> numberMap = new HashMap<Integer, String>();
 		numberMap.put(119, "0");
-		numberMap.put(36, "1a");
-		numberMap.put(18, "1b");
+		numberMap.put(36, "1");
+		numberMap.put(18, "E");
 		numberMap.put(93, "2");
-		numberMap.put(109, "3a");
-		numberMap.put(91, "3b");
-		numberMap.put(46, "4a");
-		numberMap.put(58, "4b");
+		numberMap.put(109, "3");//109,91,46,58,37,39,82,114
+		numberMap.put(91, "_");//
+		numberMap.put(46, "4");//
+		numberMap.put(58, "_");//
 		numberMap.put(107, "5");
-		numberMap.put(122, "6a");
-		numberMap.put(123, "6b");
-		numberMap.put(37, "7a");
-		numberMap.put(39, "7b");
-		numberMap.put(82, "7c");
-		numberMap.put(114, "7d");
+		numberMap.put(122, "6");
+		numberMap.put(123, "L");
+		numberMap.put(37, "7");//
+		numberMap.put(39, "C");//
+		numberMap.put(82, "_");//
+		numberMap.put(114, "_");//
 		numberMap.put(127, "8");
-		numberMap.put(47, "9a");
-		numberMap.put(111, "9b");
+		numberMap.put(47, "9");
+		numberMap.put(111, "J");
+		
+		Map<Integer, String> reverseNumberMap = new HashMap<Integer, String>();
+		reverseNumberMap.put(119, "0");
+		reverseNumberMap.put(36, "E");
+		reverseNumberMap.put(18, "1");
+		reverseNumberMap.put(93, "2");
+		reverseNumberMap.put(109, "_");//109,91,46,58,37,39,82,114
+		reverseNumberMap.put(91, "3");//
+		reverseNumberMap.put(46, "_");//
+		reverseNumberMap.put(58, "4");//
+		reverseNumberMap.put(107, "5");
+		reverseNumberMap.put(122, "9");
+		reverseNumberMap.put(123, "J");
+		reverseNumberMap.put(37, "_");//
+		reverseNumberMap.put(39, "_");//
+		reverseNumberMap.put(82, "7");//
+		reverseNumberMap.put(114, "C");//
+		reverseNumberMap.put(127, "8");
+		reverseNumberMap.put(47, "6");
+		reverseNumberMap.put(111, "L");
 
-		int[][] fullMatrix = { // ¬õrºñgÂÅb¶Ày¬v¬õm«Cc
-				{ 0, 1, 1, 0, 0, 1 }, // ¬õR
-				{ 1, 0, 1, 0, 1, 0 }, // ºñG
-				{ 1, 1, 0, 1, 0, 0 }, // ÂÅB
-				{ 1, 1, 1, 0, 1, 1 }, // ¶ÀY
-				{ 1, 1, 1, 1, 0, 1 }, // ¬v¬õM
-				{ 1, 1, 1, 1, 1, 0 }// «CC
+		int[][] fullMatrix = { // ¬õrºñgÂÅb¶Ày¬v¬õm«Cc¶Âk¥Õw
+				{ 0, 1, 1, 0, 0, 1, 1, 0}, // ¬õR
+				{ 1, 0, 1, 0, 1, 0, 1, 0 }, // ºñG
+				{ 1, 1, 0, 1, 0, 0, 1, 0 }, // ÂÅB
+				{ 1, 1, 1, 0, 1, 1, 1, 0 }, // ¶ÀY
+				{ 1, 1, 1, 1, 0, 1, 1, 0 }, // ¬v¬õM
+				{ 1, 1, 1, 1, 1, 0, 1, 0 }// «CC
 		};
 		// int[][] celleophaneMatrix = { //¬õºñÂÅ¶À 8 56
 		// { 0, 1, 1, 0 },
@@ -95,6 +115,8 @@ public class CellophaneNumber {
 		indexMap.put("y", 3);
 		indexMap.put("m", 4);
 		indexMap.put("c", 5);
+		indexMap.put("k", 6);
+		indexMap.put("w", 7);
 
 		Map<String, Color> colorMap = new HashMap<String, Color>();
 		colorMap.put("R", new Color(255,75,75));
@@ -110,10 +132,12 @@ public class CellophaneNumber {
 		colorMap.put("y", new Color(255,255,0));
 		colorMap.put("m", Color.MAGENTA);
 		colorMap.put("c", Color.CYAN);
+		colorMap.put("k", Color.GRAY);
+		colorMap.put("w", Color.WHITE);
   
-		String ink = "rgbym";
+		String ink = "rgby";
 		String celleophane = "RGBY";
-		int leastColor = 4;
+		int leastColor = 3;
 		Color[] colorArray = new Color[ink.length()];
 		for (int i = 0; i < ink.length(); i++) {
 			colorArray[i] = colorMap.get(ink.substring(i, i + 1));
@@ -173,6 +197,8 @@ public class CellophaneNumber {
 
 									boolean matchAll = true;
 									String numbers = "";
+									String reverseNumbers = "";
+									int reverseCount = 0;
 									for (int i = 0; i < celleophangeNum; i++) {
 										boolean match = false;
 										int value = 0;
@@ -184,8 +210,13 @@ public class CellophaneNumber {
 												|| value == 122 || value == 123 || value == 37 || value == 39
 												|| value == 82 || value == 114 || value == 127 || value == 47
 												|| value == 111) {
-											numbers = numbers + numberMap.get(value) + " ";
+											numbers = numbers + numberMap.get(value);
+											reverseNumbers = reverseNumbers + reverseNumberMap.get(value);
 											match = true;
+											if (value == 109 || value == 91 || value == 46 || value == 58 || value == 37
+													|| value == 39 || value == 82 || value == 114) {
+												reverseCount++;
+											}
 										}
 										if (match == false) {
 											matchAll = false;
@@ -194,20 +225,17 @@ public class CellophaneNumber {
 
 									}
 									if (matchAll) {
+										String numberColorString = "" + no1 + no2 + no3 + no4 + no5 + no6 + no7;
 										if (!reverseSet.contains("" + no1 + no2 + no3 + no4 + no5 + no6 + no7)) {
 
 											reverseSet.add("" + no7 + no6 + no5 + no4 + no3 + no2 + no1);
-											int[] lineColor = { no1, no2, no3, no4, no5, no6, no7 };
 											try {
-												NumberGraphic.print(lineColor, colorArray, numbers);
+												NumberGraphic.print(numberColorString, colorArray,numberColorString+ "  "+ numbers+" "+reverseNumbers,reverseCount);
 											} catch (IOException e) {
-												// TODO Auto-generated catch
-												// block
 												e.printStackTrace();
 											}
-										} else {
-										}
-										validateSet.add("" + no1 + no2 + no3 + no4 + no5 + no6 + no7);
+										}   
+										validateSet.add(numberColorString);
 									}
 								}
 							}
